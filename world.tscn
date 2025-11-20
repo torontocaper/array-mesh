@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://drc1s6se3atc"]
+[gd_scene load_steps=12 format=4 uid="uid://drc1s6se3atc"]
 
-[ext_resource type="Script" uid="uid://b6vxc4p2xva7f" path="res://ocean.gd" id="1_f3sb7"]
+[ext_resource type="Script" uid="uid://b6vxc4p2xva7f" path="res://ocean_array.gd" id="1_f3sb7"]
 [ext_resource type="Shader" uid="uid://u1gwhms0swkq" path="res://ocean.gdshader" id="1_fj7yv"]
+[ext_resource type="Script" uid="uid://ckw4x30a8vt84" path="res://ocean_noise.gd" id="3_tlwt5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fj7yv"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -20,19 +21,38 @@ glow_enabled = true
 render_priority = 0
 shader = ExtResource("1_fj7yv")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fj7yv"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_fj7yv"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_tlwt5"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1, 1e-05, 1),
-"attribute_data": PackedByteArray("Vn0I/1Z9CP9WfQj/Zvks/2b5LP9m+Sz/"),
+"attribute_data": PackedByteArray("AP///wD///8A////AAD//wAA//8AAP//"),
 "format": 34359738377,
-"material": SubResource("ShaderMaterial_fj7yv"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 6,
 "vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AAAAAAAAAAAAAIA/")
 }]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlwt5"]
+vertex_color_use_as_albedo = true
+use_point_size = true
+point_size = 4.0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aqk2v"]
+_surfaces = [{
+"aabb": AABB(0, 0, 0, 3, 1e-05, 3),
+"attribute_data": PackedByteArray("AP////8AAP8A/wD//wD//wD/AP8A/wD/AAD///////8A//////////8AAP8A/wD/AAAA/wAA//8="),
+"format": 34359738377,
+"primitive": 0,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 14,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEBAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAABAAACAPwAAAAAAAEBAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAIA/AAAAQAAAAAAAAABAAAAAQAAAAAAAAEBAAABAQAAAAAAAAIA/AABAQAAAAAAAAABAAABAQAAAAAAAAEBA")
+}]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tlwt5"]
+noise_type = 2
+frequency = 0.0877
+fractal_type = 0
+fractal_octaves = 1
 
 [node name="World" type="Node3D"]
 
@@ -44,10 +64,20 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.70710677, 0.18301272, -0.6830127, 0, 0.96592593, 0.25881907, 0.7071069, 0.18301275, -0.6830128, 0, 10, 0)
+transform = Transform3D(-1, -2.262668e-08, 8.444392e-08, 0, 0.9659258, 0.25881904, -8.742278e-08, 0.25881904, -0.9659258, 10, 5, 0)
 
-[node name="Ocean" type="MeshInstance3D" parent="."]
+[node name="OceanArray" type="MeshInstance3D" parent="."]
+visible = false
 material_override = SubResource("ShaderMaterial_tlwt5")
-mesh = SubResource("ArrayMesh_fj7yv")
+mesh = SubResource("ArrayMesh_tlwt5")
 script = ExtResource("1_f3sb7")
-grid_size = Vector2i(1000, 1000)
+
+[node name="OceanNoise" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_tlwt5")
+mesh = SubResource("ArrayMesh_aqk2v")
+script = ExtResource("3_tlwt5")
+grid_size_x = 20
+grid_size_y = 20
+threshold = 0.0
+voronoi_noise = SubResource("FastNoiseLite_tlwt5")
+height = null
