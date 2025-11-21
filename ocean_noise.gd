@@ -41,7 +41,7 @@ func draw_mesh() -> void:
 			#print_debug("Noise value at %s, %s = %s" % [str(column), str(row), str(noise_value)])
 			if noise_value > threshold:
 				#print_debug("Creating a point at position %s, %s" % [str(column), str(row)])
-				vertices.push_back(Vector3(column, noise_value * height, row))
+				vertices.push_back(Vector3(column, 0, row))
 				var new_color: Color = Color(noise_value, noise_value, noise_value)
 				colors.push_back(new_color)
 	# Initialize the ArrayMesh.

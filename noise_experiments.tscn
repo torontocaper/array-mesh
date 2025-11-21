@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3cv5upmbl6ac"]
+
+[ext_resource type="Script" uid="uid://beb2wdehbq8dp" path="res://noise_triangles.gd" id="1_mkhb2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_s5tbj"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mkhb2"]
+width = 1920
+height = 1080
+noise = SubResource("FastNoiseLite_s5tbj")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mkhb2"]
+noise_type = 2
+frequency = 0.2999
+fractal_type = 0
+
+[node name="NoiseExperiments" type="Node2D"]
+
+[node name="NoiseSprite" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = SubResource("NoiseTexture2D_mkhb2")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="NoiseTriangles" type="Sprite2D" parent="."]
+scale = Vector2(10, 10)
+centered = false
+script = ExtResource("1_mkhb2")
+field_size = Vector2i(128, 72)
+source_noise = SubResource("FastNoiseLite_mkhb2")
+target_value = -0.5
+threshold = 0.02
