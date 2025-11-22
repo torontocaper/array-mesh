@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://cdh6rjttn8by0"]
+
+[node name="StarPolygon" type="Polygon2D"]
+polygon = PackedVector2Array(0, -5, 1, -2, 5, -2, 2, 0, 4, 4, 0, 2, -4, 4, -2, 0, -5, -2, -1, -2)

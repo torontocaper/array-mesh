@@ -1,25 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3cv5upmbl6ac"]
+[gd_scene load_steps=6 format=3 uid="uid://c3cv5upmbl6ac"]
 
 [ext_resource type="Script" uid="uid://beb2wdehbq8dp" path="res://noise_triangles.gd" id="1_mkhb2"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_s5tbj"]
+[sub_resource type="Gradient" id="Gradient_mkhb2"]
+colors = PackedColorArray(0, 0, 0, 1, 0.08235294, 0, 0.101960786, 1)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mkhb2"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yb48q"]
+gradient = SubResource("Gradient_mkhb2")
 width = 1920
 height = 1080
-noise = SubResource("FastNoiseLite_s5tbj")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ColorPalette" id="ColorPalette_mkhb2"]
+colors = PackedColorArray(0.64705884, 0.79607844, 0.8509804, 1, 0.9607843, 0.8901961, 0.8392157, 1, 0.9843137, 0.9843137, 0.95686275, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_mkhb2"]
 noise_type = 2
-frequency = 0.2999
+frequency = 0.4273
 fractal_type = 0
 
 [node name="NoiseExperiments" type="Node2D"]
 
-[node name="NoiseSprite" type="Sprite2D" parent="."]
-visible = false
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -100
 texture_filter = 1
-texture = SubResource("NoiseTexture2D_mkhb2")
+texture = SubResource("GradientTexture2D_yb48q")
 centered = false
 metadata/_edit_lock_ = true
 
@@ -27,7 +32,6 @@ metadata/_edit_lock_ = true
 scale = Vector2(10, 10)
 centered = false
 script = ExtResource("1_mkhb2")
-field_size = Vector2i(128, 72)
+palette = SubResource("ColorPalette_mkhb2")
 source_noise = SubResource("FastNoiseLite_mkhb2")
-target_value = -0.5
-threshold = 0.02
+star_scale = 0.02
